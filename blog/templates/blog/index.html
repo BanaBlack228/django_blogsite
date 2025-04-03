@@ -1,14 +1,19 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block content %}
 <h1>Главная страница</h1>
-
+<img src="{% static 'img/RF.jpg' %}" width="200" height="auto">
+<div>
 {% for post in posts %}
     <h3><b>{{ post.author }}</b></h3>
-    <p><h4><a href="{% url 'blog:read_post' pk=post.pk %}">{{ post.title }}</a> </h4></p>
+{% if post.image %}
+    <img src="{{ post.image.url }}" width="200px" height="auto">
+{% else %}
+    <img src="{% static 'img/No.jpg' %}" width="200" height="auto">
+{% endif %}
+    <p><h4><a href="{% url 'blog:read_post' pk=post.pk %}">{{ post.title }}</a></h4></p>
     <p> {{ post.text }} </p>
     <p><i>{{ post.created_at }}</i></p>
-
 {% endfor %}
-
+</div>
 {% endblock content %}

@@ -1,10 +1,18 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block content %}
+
+
 <h3>Информация о посте № {{ post.pk }}</h3>
 <hr>
 <b>{{ post.author }}</b>
 <h4>{{ post.title }}</h4>
+{% if post.image %}
+    <img src="{{ post.image.url }}" width="200px" height="auto">
+{% else %}
+    <img src="{% static 'img/No.jpg' %}" width="200" height="auto">
+{% endif %}
+<br>
 {{ post.text }}
 <p><i>{{ post.created_at }}</i></p>
 {% endblock content %}
