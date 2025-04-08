@@ -1,7 +1,4 @@
-from lib2to3.fixes.fix_input import context
-
-from django.db.models.signals import post_init
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
 
@@ -32,13 +29,15 @@ def add_post(request):
             post.save()
             return index(request)
 
-def read_post(request, pk):
-    post = Post.objects.get(pk=pk)
+def read_post(request, slug):
+    #post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, slug=slug)
     context = {"title":"Информация о посте","post": post}
     return render(request, template_name="blog/post_detail.html", context=context)
 
 def update_post(request, pk):
-    post = Post.objects.get(pk=pk)
+    #post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         post_form = PostForm(data=request.POST, files=request.FILES)
         if post_form.is_valid():
@@ -56,3 +55,21 @@ def update_post(request, pk):
         "image": post.image
         })
         return render(request, template_name="blog/post_edit.html", context={"form": post_form})
+
+def delete_post(request, pk):
+    #post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
+    context = {"post":post}
+    if request.method == "POST":
+        post.delete()
+        return  redirect('blog:index')
+    return render(request, template_name='blog/post_delete.html', context=context)
+
+def page_not_found(request, exception):
+    return render(request, template_name='blog/404.html', context={'title': "404"})
+
+def forbidden(request, exception):
+    return render(request, template_name="blog/403.html", context={'title': "403"})
+
+def server_error(request):
+    return render(request,template_name='blog/500.html', context={'title': "500"})
