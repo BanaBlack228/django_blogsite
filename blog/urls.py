@@ -1,4 +1,3 @@
-from tkinter.font import names
 
 from django.urls import path
 from blog.views import index, about, add_post, read_post, update_post,delete_post

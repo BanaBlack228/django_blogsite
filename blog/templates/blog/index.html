@@ -4,16 +4,28 @@
 <h1>Главная страница</h1>
 <img src="{% static 'img/RF.jpg' %}" width="200" height="auto">
 <div>
+    <div class="post-list">
 {% for post in posts %}
-    <h3><b>{{ post.author }}</b></h3>
-{% if post.image %}
-    <img src="{{ post.image.url }}" width="200px" height="auto">
-{% else %}
-    <img src="{% static 'img/No.jpg' %}" width="200" height="auto">
-{% endif %}
-    <p><h4><a href="{{ 'post.get_absolute_url' }}">{{ post.title }}</a></h4></p>
-    <p> {{ post.text }} </p>
-    <p><i>{{ post.created_at }}</i></p>
+        <div class="post-item">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" width="200px" height="auto">
+            {% else %}
+                <img src="{% static 'img/No.jpg' %}" width="200" height="auto">
+            {% endif %}
+            <div>
+                <div class="post-author">
+                    <h3><b>{{ post.author }}</b></h3>
+                </div>
+                <div class="post-title">
+                    <p><h4><a href="{{ 'post.get_absolute_url' }}">{{ post.title }}</a></h4></p>
+                </div>
+                <div class="post-text">
+                    <p> {{ post.text }} </p>
+                </div>
+                <div class="created_at">
+                    <p><i>{{ post.created_at }}</i></p>
+                </div>
 {% endfor %}
 </div>
+
 {% endblock content %}
