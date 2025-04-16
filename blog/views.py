@@ -12,6 +12,10 @@ def about(request):
     context = {"title": "О сайте"}
     return render(request, template_name='blog/about.html', context=context)
 
+def about_blog(request):
+    context = {"title": "О Блоге"}
+    return render(request, template_name='blog/about_blog.html', context=context)
+
 def add_post(request):
     if request.method == 'GET':
         post_form = PostForm()
